@@ -1,2 +1,1 @@
-# escalonamentodecpu-projetoso
-Projeto final da disciplina Sistemas Operacionais UFPB
+# Projeto final da disciplina Sistemas Operacionais UFPB
