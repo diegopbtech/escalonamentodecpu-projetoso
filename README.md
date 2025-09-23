@@ -15,5 +15,6 @@ O simulador lê uma lista de processos a partir de um arquivo .txt contendo: nom
 ## Compilação
 Executar os seguintes comandos:
   make
+  
   ./Projeto
 
