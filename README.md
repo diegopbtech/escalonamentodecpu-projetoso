@@ -14,9 +14,11 @@ O simulador lê uma lista de processos a partir de um arquivo .txt contendo: nom
 
 ## Equipe
 - Diego Araújo dos Santos | Matrícula: 20220024992
+  
   Implementação dos algoritmos SJF, Multilevel Queue e Multilevel Feedback Queue
 
 - Gustavo Caminha da Silva Júnior | Matrícula: 20210114817
+  
   Implementação dos algoritmos FCFS, Round Robin e Prioridade
 
 ## Instruções de USO
