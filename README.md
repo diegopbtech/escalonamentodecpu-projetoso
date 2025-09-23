@@ -5,13 +5,24 @@ O simulador lê uma lista de processos a partir de um arquivo .txt contendo: nom
 
 ## Algoritmos implementados:
 
-1. SJF e 
+1. SJF
 2. Multilevel Queue (MLQ)
 3. Multilevel Feedback Queue (MLFQ)
 4. FCFS
 5. Round Robin (RR)
 6. Prioridade
 
+## Equipe
+- Diego Araújo dos Santos | Matrícula: 20220024992
+  Implementação dos algoritmos SJF, Multilevel Queue e Multilevel Feedback Queue
+
+- Gustavo Caminha da Silva Júnior | Matrícula: 20210114817
+  Implementação dos algoritmos FCFS, Round Robin e Prioridade
+
+## Instruções de USO
+
+ Basta selecionar no menu principal o algoritmo desejado e observar o comportamento. A lista carregada inicialmente dos processos está no arquivo schedule.txt.
+  
 ## Compilação
 Executar os seguintes comandos:
  
