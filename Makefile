@@ -1,16 +1,10 @@
-all: main
+CXX = g++        
+CXXFLAGS = -Wall -g  
+TARGET = Projeto
+SRC = main.cpp agendar_sjf.h agendar_mlq.h
 
-CXX = clang++
-override CXXFLAGS += -g -Wall -Werror
-
-SRCS = $(shell find . -name '.ccls-cache' -type d -prune -o -type f -name '*.cpp' -print | sed -e 's/ /\\ /g')
-HEADERS = $(shell find . -name '.ccls-cache' -type d -prune -o -type f -name '*.h' -print)
-
-main: $(SRCS) $(HEADERS)
-	$(CXX) $(CXXFLAGS) $(SRCS) -o "$@"
-
-main-debug: $(SRCS) $(HEADERS)
-	NIX_HARDENING_ENABLE= $(CXX) $(CXXFLAGS) -O0  $(SRCS) -o "$@"
+$(TARGET): $(SRC)
+	$(CXX) $(CXXFLAGS) $(SRC) -o $(TARGET)
 
 clean:
-	rm -f main main-debug
+	rm -f $(TARGET)
