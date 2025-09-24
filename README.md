@@ -32,3 +32,14 @@ Executar os seguintes comandos:
   
   ./Projeto
 
+
+## Tempo Médio de Espera
+
+| Algoritmo                              | Tempo médio de espera (ms) |
+| -------------------------------------- | -------------------------- |
+| SJF                                    | 76.6                       |
+| Multilevel Queue                       | 91.8667                    |
+| Multilevel Feedback Queue              | 120                        |
+| Escalonador FCFS                       | 110.467                    |
+| Escalonador Round Robin (quantum 10ms) | 132.6                      |
+| Prioridade                             | 93.3333                    |
