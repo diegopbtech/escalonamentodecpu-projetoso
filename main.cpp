@@ -1,4 +1,3 @@
-#include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -8,52 +7,12 @@
 using namespace std;
 
 #include "tarefa.h"
-#include "agendar_sjf.h"
-#include "agendar_mlq.h"
-
-// CARREGAR DO ARQUIVO
-list<Tarefa> carregarTarefas(const string &nome_do_arquivo) {
-  ifstream arquivo(nome_do_arquivo);
-  
-  list<Tarefa> tarefas;
-  string linha;
-
-  while (getline(arquivo, linha)) {
-      stringstream ss(linha);
-      string nome, prioridade_str, duracao_str;
-
-      getline(ss, nome, ',');
-      getline(ss, prioridade_str, ',');
-      getline(ss, duracao_str, ',');
-    
-      int prioridade = stoi(prioridade_str);
-      int duracao = stoi(duracao_str);
-
-        tarefas.emplace_back(nome, prioridade, duracao);
-  }
-
-  arquivo.close();
-  return tarefas;
-}
-
-// EXIBIR TABELA COM TAREFAS PRESENTES NA LISTA
-void exibirTarefas(const list<Tarefa> &tarefas, string nome_escalonamento) {
-  cout << "|-----------" << nome_escalonamento << "-----------|" << endl;
-  cout << left
-       << "| " << setw(10) << "NOME"
-       << "| " << setw(12) << "PRIORIDADE"
-       << "| " << setw(10) << "DURACAO"
-       << "|" << endl;
-  cout << "|-------------------------------------|" << endl;
-
-  for (const auto &t : tarefas) {
-      cout << "| " << setw(10) << t.nome
-           << "| " << setw(12) << t.prioridade
-           << "| " << setw(10) << to_string(t.duracao) + " ms"
-           << "|" << endl;
-  }
-  cout << "---------------------------------------" << endl;
-}
+#include "EscalonadorSJF.h"
+#include "EscalonadorMLQ.h"
+#include "EscalonadorMLFQ.h"
+#include "EscalonadorFCFS.h"
+#include "EscalonadorPrioridade.h"
+#include "EscalonadorRR.h"
 
 int main() {
   // CARREGAR TAREFAS DO ARQUIVO E COLOCÁ-LAS EM UMA LISTA
@@ -71,19 +30,54 @@ int main() {
     cout << "\n4 - Escalonador FCFS\n";
     cout << "\n5 - Escalonador Round Robin\n";
     cout << "\n6 - Escalonador Prioridade\n";
+    cout << "\n7 - Finalizar\n";
     cout << "\nQual escalonador deseja executar? ";
     cin >> opcao;
     
     // EXECUTAR O SJF
     if(opcao == 1){
+        system("clear");
         Tarefas_escalonamento = escalonadorSJF(Tarefas);
-        exibirTarefas(Tarefas_escalonamento, " FILA POR SJF ");
-        cout << "\nTempo de espera total: " << calcularTempoMedioEspera(Tarefas_escalonamento) << " ms" << endl;
+        exibirTarefasComparacao(Tarefas, Tarefas_escalonamento, "FILA DE ENTRADA", " FILA POR SJF ");
+        cout << "\nTempo de espera medio: " << calcularTempoMedioEspera(Tarefas_escalonamento) << " ms" << endl;
     }else if (opcao == 2){
+        system("clear");
         Tarefas_escalonamento = escalonadorMultilevelQueue(Tarefas);
-        exibirTarefas(Tarefas_escalonamento, " FILA POR MLQ ");
-        cout << "\nTempo de espera total: " << calcularTempoMedioEspera(Tarefas_escalonamento) << " ms" << endl;
+        exibirTarefasComparacao(Tarefas_escalonamento, Tarefas, " FILA POR MLQ ", "FILA DE ENTRADA");
+        cout << "\nTempo de espera medio: " << calcularTempoMedioEspera(Tarefas_escalonamento) << " ms" << endl;
+    }else if (opcao == 3){
+      system("clear");
+      Tarefas_escalonamento = escalonadorMultilevelFeedbackQueue(Tarefas);
+      exibirTarefasComparacao(Tarefas_escalonamento, Tarefas, " FILA POR MLFQ ", "FILA DE ENTRADA");
+      cout << "\nTempo de espera medio: " << tempoEsperaMedio << " ms" << endl;
+    }else if (opcao == 4) {
+      system("clear");
+      Tarefas_escalonamento = EscalonadorFCFS(Tarefas);
+      exibirTarefasComparacao(Tarefas_escalonamento, Tarefas, " FILA POR FCFS ", "FILA DE ENTRADA");
+      cout << "\nTempo de espera medio: "
+          << calcularTempoMedioEspera(Tarefas_escalonamento) << " ms" << endl;
+    }else if (opcao == 5) {
+      system("clear");
+      int quantum;
+      cout << "Informe o quantum (ms): ";
+      cin >> quantum;
+
+      Tarefas_escalonamento = EscalonadorRR(Tarefas, quantum);
+      exibirTarefasComparacao(Tarefas_escalonamento, Tarefas, " FILA POR RR ", "FILA DE ENTRADA");
+
+      cout << "\nTempo de espera medio (RR): "
+          << calcularTempoMedioEsperaRR(Tarefas, quantum) << " ms" << endl;
+    }else if (opcao == 6) {
+      system("clear");
+      Tarefas_escalonamento = EscalonadorPrioridade(Tarefas);
+      exibirTarefasComparacao(Tarefas_escalonamento, Tarefas, " FILA POR PRIORIDADE ", "FILA DE ENTRADA");
+
+      cout << "\nTempo de espera medio: "
+          << calcularTempoMedioEspera(Tarefas_escalonamento) << " ms" << endl;
+    }else if (opcao == 7) {
+      break;
     }
+    
   }
 
   return 0;
